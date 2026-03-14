@@ -66,11 +66,18 @@ cp .env.example .env
 ```sh
 cd backend
 python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # macOS/Linux
+# On Windows:
+# (If using PowerShell and you get an execution policy error, run this first: Set-ExecutionPolicy Unrestricted -Scope CurrentUser)
+.\venv\Scripts\activate
+# On macOS/Linux:
+# source venv/bin/activate
 
 pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+
+http://localhost:8000/
+http://localhost:8000/docs
 ```
 
 ### 3. Start the Frontend

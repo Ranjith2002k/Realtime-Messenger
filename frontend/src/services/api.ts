@@ -15,7 +15,7 @@ async function getAuthToken(): Promise<string | null> {
 /**
  * Make an authenticated API request to the FastAPI backend.
  */
-async function apiFetch<T = any>(
+async function apiFetch<T = unknown>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
@@ -72,7 +72,7 @@ export const profilesApi = {
 
   get: (id: string) => apiFetch(`/profiles/${id}`),
 
-  update: (id: string, data: Record<string, any>) =>
+  update: (id: string, data: Record<string, unknown>) =>
     apiFetch(`/profiles/${id}`, {
       method: "PATCH",
       body: JSON.stringify(data),
@@ -85,13 +85,13 @@ export const conversationsApi = {
   list: () => apiFetch("/conversations"),
 
   createDirect: (otherUserId: string) =>
-    apiFetch("/conversations", {
+    apiFetch<{ id: string }>("/conversations", {
       method: "POST",
       body: JSON.stringify({ other_user_id: otherUserId }),
     }),
 
   createGroup: (name: string, memberIds: string[]) =>
-    apiFetch("/conversations/group", {
+    apiFetch<{ id: string }>("/conversations/group", {
       method: "POST",
       body: JSON.stringify({ name, member_ids: memberIds }),
     }),

@@ -92,14 +92,14 @@ export const useChatStore = create<ChatState>((set, get) => ({
       // Get enriched conversations from API
       const data = await conversationsApi.list();
 
-      const conversationsWithMeta: ConversationWithMeta[] = (data || []).map(
-        (conv: any) => ({
-          id: conv.id,
-          type: conv.type,
-          name: conv.name,
-          participants: conv.participants || [],
+      const conversationsWithMeta: ConversationWithMeta[] = (data as Record<string, unknown>[] || []).map(
+        (conv) => ({
+          id: conv.id as string,
+          type: conv.type as string,
+          name: conv.name as string,
+          participants: (conv.participants as Profile[]) || [],
           lastMessage: conv.last_message as MessageRow | undefined,
-          unreadCount: conv.unread_count || 0,
+          unreadCount: (conv.unread_count as number) || 0,
         })
       );
 

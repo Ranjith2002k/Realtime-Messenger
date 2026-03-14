@@ -4,13 +4,13 @@ import { Phone, Video, MoreVertical } from "lucide-react";
 
 export function ChatHeader() {
   const { activeConversationId, conversations } = useChatStore();
+  const profile = useChatStore((s) => s.profile);
 
   if (!activeConversationId) return null;
 
   const conv = conversations.find((c) => c.id === activeConversationId);
   if (!conv) return null;
 
-  const profile = useChatStore((s) => s.profile);
   const otherParticipant = conv.participants.find((p) => p.id !== profile?.id);
   const displayStatus = conv.type === "direct" && otherParticipant ? otherParticipant.status : undefined;
 

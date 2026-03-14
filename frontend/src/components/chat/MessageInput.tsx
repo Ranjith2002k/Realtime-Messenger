@@ -32,8 +32,8 @@ export function MessageInput() {
           uploadResult.file_name,
           uploadResult.file_url
         );
-      } catch (err: any) {
-        toast.error("Upload failed: " + err.message);
+      } catch (err: unknown) {
+        toast.error("Upload failed: " + (err instanceof Error ? err.message : String(err)));
       } finally {
         setUploading(false);
         setSelectedFile(null);
